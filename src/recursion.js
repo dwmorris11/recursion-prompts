@@ -81,21 +81,38 @@ var range = function(x, y) {
 if (y-x === 0){
   return [];
 }
+if(y<x){
+  var swap = y;
+  y = x;
+  x = swap;
+  var swapped = true;
+}
 
   var numbers = range(x+1, y);
   if(x+1!==y){
     numbers.unshift(x+1);
   }
+  if(swapped){
+    numbers.reverse();
+  }
   return numbers;
 
 };
-console.log(range(2,9));
 // 7. Compute the exponent of a number.
 // The exponent of a number says how many times the base number is used as a factor.
 // 8^2 = 8 x 8 = 64. Here, 8 is the base and 2 is the exponent.
 // exponent(4,3); // 64
 // https://www.khanacademy.org/computing/computer-science/algorithms/recursive-algorithms/a/computing-powers-of-a-number
 var exponent = function(base, exp) {
+  if(exp===0){
+    return 1;
+  }
+  if(exp<0){
+    return Number(((1/base)*exponent(base,exp+1)).toPrecision(4));
+  }
+  if(exp>0){
+    return base*exponent(base,exp-1);
+  }
 };
 
 // 8. Determine if a number is a power of two.
@@ -103,6 +120,15 @@ var exponent = function(base, exp) {
 // powerOfTwo(16); // true
 // powerOfTwo(10); // false
 var powerOfTwo = function(n) {
+  if(n===2 || n===1){
+    return true;
+  }
+  if(n/2>=2){
+    return powerOfTwo(n/2);
+  }else{
+    return false;
+  }
+
 };
 
 // 9. Write a function that reverses a string.
